@@ -155,73 +155,9 @@ Ce dépôt contient la huitième itération du projet "Pharma". Cette version ma
 
 ---
 
-**Auteur :** [Votre Nom/Pseudo GitHub]
+**Auteur :** Sidonie 
+- sidoniedjuissifohouo@gmail.com
+- www.linkedin.com/in/sidonie-djuissi-fohouo
 
 **Date :** 12 juin 2025
 
----
-
-### **Étapes pour Pousser Pharma8 sur GitHub :**
-
-Ces étapes sont identiques à celles de Pharma7, mais il est crucial de s'assurer que vous créez un **nouveau dépôt** sur GitHub spécifiquement pour Pharma8 et que vous mettez à jour l'URL distante de votre projet local en conséquence.
-
-1.  **Assurez-vous d'être dans le répertoire racine de votre projet Pharma8** dans votre terminal.
-
-    ```bash
-    cd /chemin/vers/votre/projet/Pharma8
-    ```
-
-2.  **Initialisez un dépôt Git local** (si ce n'est pas déjà fait, mais si vous travaillez sur une copie de Pharma7, il est probable qu'il y ait déjà un `.git` dossier. Si c'est le cas, passez cette étape).
-
-    ```bash
-    git init
-    ```
-
-3.  **Ajoutez les fichiers au "staging area" de Git :**
-
-    ```bash
-    git add .
-    ```
-
-    _Très important : Vérifiez que `src/main/resources/datasource.properties` n'est PAS listé par `git status` après `git add .` (car il est ignoré). `datasource.properties.example` (si vous l'avez créé) devrait être ajouté._
-
-4.  **Faites votre "commit" :**
-
-    ```bash
-    git commit -m "Initial commit: Pharma8 - Integrated JdbcTemplate, removed Class.forName, externalized DB properties"
-    ```
-
-5.  **Créez un nouveau dépôt vide sur GitHub (distinct des précédents !)**
-
-    - Allez sur GitHub, cliquez sur "New repository".
-    - Nommez-le **`Pharma8`**.
-    - Ne cochez PAS "Add a README file" ou ".gitignore" (vous avez déjà les vôtres).
-    - Cliquez sur "Create repository".
-
-6.  **Connectez votre dépôt Git local au nouveau dépôt distant sur GitHub :**
-
-    - Copiez la ligne `git remote add origin ...` depuis la page de création du dépôt GitHub.
-
-    ```bash
-    git remote add origin [https://github.com/votre_utilisateur/Pharma8.git](https://github.com/votre_utilisateur/Pharma8.git)
-    ```
-
-    \*(**Remplacez `votre_utilisateur` par votre nom d'utilisateur GitHub réel et `Pharma8.git` par l'URL exacte fournie par GitHub).\***
-
-7.  **Poussez votre code vers GitHub :**
-
-    ```bash
-    git push -u origin main
-    ```
-
-    _(Ou `master`, selon la branche par défaut que GitHub vous propose ou que vous utilisez localement. Le plus courant est `main` pour les nouveaux dépôts GitHub)._
-
-    **Auteur :**
-
-    - Sidonie sidoniedjuissifohouo@gmail.com
-
-- www.linkedin.com/in/sidonie-djuissi-fohouo
-
-**Date :**
-
-- 12 juin 2025
