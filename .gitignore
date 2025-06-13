@@ -56,5 +56,3 @@ Thumbs.db
 # Exclude sensitive database properties file.
 src/main/resources/datasource.properties
 
-# If you prefer to exclude the actual Spring XML too, even if it's no longer strictly sensitive (good practice for local overrides)
-# src/main/resources/demo-beans.xml

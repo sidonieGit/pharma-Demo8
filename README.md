@@ -1,17 +1,18 @@
-# Projet Pharma8 - Application de Gestion de Médicaments (Spring XML, HikariCP, JdbcTemplate)
+# Projet Pharma8 - Application de Gestion de Médicaments (Spring XML, HikariCP, JdbcTemplate, **JUnit 5**)
 
-Ce dépôt contient la huitième itération du projet "Pharma". Cette version majeur **introduit l'utilisation de `JdbcTemplate` de Spring** pour simplifier la couche d'accès aux données (DAO), rendant le code plus propre et moins verbeux pour les opérations JDBC. L'externalisation des propriétés de la base de données via `datasource.properties` et l'utilisation de HikariCP sont maintenues.
+Ce dépôt contient la huitième itération du projet "Pharma". Cette version majeur **introduit l'utilisation de `JdbcTemplate` de Spring** pour simplifier la couche d'accès aux données (DAO), rendant le code plus propre et moins verbeux pour les opérations JDBC. De plus, elle intègre des **tests unitaires avec JUnit 5** pour garantir la qualité et la fiabilité du code. L'externalisation des propriétés de la base de données via `datasource.properties` et l'utilisation de HikariCP sont maintenues.
 
 ## Contexte
 
 - **Pharma1-6** : Progression de l'injection de dépendances, de la configuration Spring et de l'intégration initiale de la base de données.
 - **Pharma7** : Introduction de l'externalisation des informations sensibles de la base de données dans `datasource.properties` pour une meilleure sécurité et configurabilité.
-- **Pharma8** : **Simplification de la couche DAO via `JdbcTemplate`** :
+- **Pharma8** : **Simplification de la couche DAO via `JdbcTemplate` et ajout de tests unitaires avec JUnit 5** :
   - Les méthodes CRUD du `MedicamentDao` utilisent désormais `JdbcTemplate` pour exécuter les requêtes SQL, éliminant le besoin de gérer manuellement `Connection`, `Statement`, et `ResultSet`.
   - Le `JdbcTemplate` est configuré via Spring et reçoit le `DataSource` (`HikariDataSource`).
   - Le fichier `datasource.properties` est toujours exclu du contrôle de version (`.gitignore`).
   - L'application continue d'utiliser HikariCP pour un pool de connexions performant et interagit avec une base de données MySQL réelle.
   - Log4j est toujours intégré pour la journalisation.
+  - **Tests unitaires : Introduction de JUnit 5 pour tester la logique des classes de modèle (comme `Medicament`) et potentiellement d'autres composants.**
 
 ## Fonctionnalités (Démo 8)
 
@@ -23,17 +24,22 @@ Ce dépôt contient la huitième itération du projet "Pharma". Cette version ma
 - **Conteneur Spring avec Configuration XML** : Le fichier `demo-beans.xml` définit la structure des beans et leur interconnexion.
 - **Couche DAO simplifiée avec `JdbcTemplate`** : Réduit le boilerplate JDBC.
 - **Gestion des Logs avec Log4j**.
+- **Tests unitaires avec JUnit 5** : Assure la validation du comportement des composants de l'application.
 
 ## Technologies Utilisées
 
 - Java (JDK 8 ou supérieur recommandé)
 - **Maven** (pour la gestion des dépendances et du build)
-- **Spring Framework** (`spring-context`, **`spring-jdbc`**)
+- **Spring Framework** (`spring-context`, `spring-jdbc`)
 - **HikariCP** (pool de connexions JDBC)
 - **MySQL Database** (le projet attend une base de données MySQL locale).
 - **MySQL Connector/J** (dépendance Maven pour le driver JDBC)
 - **Log4j 2** (pour la journalisation)
-  Pour tester cette application, suivez ces étapes :
+- **JUnit 5 (Jupiter API & Engine)** (pour les tests unitaires)
+
+## Préparation de l'Environnement et Exécution (Instructions pour l'utilisateur)
+
+Pour tester cette application, suivez ces étapes :
 
 1.  **Installer et Démarrer MySQL :** Assurez-vous d'avoir un serveur de base de données MySQL opérationnel et accessible sur `localhost:3306`.
 
@@ -95,46 +101,7 @@ Ce dépôt contient la huitième itération du projet "Pharma". Cette version ma
       ```
     - **(Optionnel mais recommandé)** : Pour référence, vous pouvez créer un fichier `datasource.properties.example` dans le même dossier `src/main/resources` (qui lui, sera committé sur Git) avec des placeholders pour indiquer la structure attendue.
 
-8.  **Vérifier et mettre à jour la configuration XML (`demo-beans.xml`) :** \* Ouvrez `src/main/resources/demo-beans.xml`. Il doit maintenant inclure la définition du bean `JdbcTemplate` et l'injection dans le `MedicamentDao`.
-
-    ````xml
-    <?xml version="1.0" encoding="UTF-8"?>
-    <beans xmlns="[http://www.springframework.org/schema/beans](http://www.springframework.org/schema/beans)"
-              xmlns:xsi="[http://www.w3.org/2001/XMLSchema-instance](http://www.w3.org/2001/XMLSchema-instance)"
-              xmlns:context="[http://www.springframework.org/schema/context](http://www.springframework.org/schema/context)"
-              xsi:schemaLocation="[http://www.springframework.org/schema/beans](http://www.springframework.org/schema/beans) [http://www.springframework.org/schema/beans/spring-beans.xsd](http://www.springframework.org/schema/beans/spring-beans.xsd)
-                  [http://www.springframework.org/schema/context](http://www.springframework.org/schema/context) [http://www.springframework.org/schema/context/spring-context.xsd](http://www.springframework.org/schema/context/spring-context.xsd)">
-
-              <context:property-placeholder location="classpath:datasource.properties"/>
-
-              <bean id="dataSourceSk" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
-                <property name="driverClassName" value="<span class="math-inline">\{jdbc\.driverClassName\}" /\>
-
-    <property name\="jdbcUrl" value\="</span>{jdbc.url}" />
-    <property name="username" value="<span class="math-inline">\{jdbc\.username\}" /\>
-    <property name\="password" value\="</span>{jdbc.password}" />
-    <property name="maximumPoolSize" value="<span class="math-inline">\{hikari\.maximumPoolSize\}" /\>
-    <property name\="minimumIdle" value\="</span>{hikari.minimumIdle}" />
-    </bean>
-
-              <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-                <property name="dataSource" ref="dataSourceSk" />
-              </bean>
-
-              <bean id="medicamentDao" class="com.sidoCop.sysPharma.dao.MedicamentDao" init-method="initialisation" destroy-method="destruction">
-                <property name="jdbcTemplate" ref="jdbcTemplate"></property> </bean>
-
-              <bean id="serviceMedicament" class="com.sidoCop.sysPharma.service.ServiceMedicament" init-method="initialisation" destroy-method="destruction">
-                <property name="imedicamentDao" ref="medicamentDao" />
-              </bean>
-
-            </beans>
-            ```
-            *Assurez-vous que l'espace de nommage `context` est bien déclaré dans les balises `<beans>` (`xmlns:context` et `xsi:schemaLocation` pour `spring-context.xsd`).*
-
-    ````
-
-9.  **Construire le projet et télécharger les dépendances (via Maven) :**
+8.  **Construire le projet et télécharger les dépendances (via Maven) :**
 
     ```bash
     mvn clean install
@@ -142,10 +109,19 @@ Ce dépôt contient la huitième itération du projet "Pharma". Cette version ma
 
     Cela compilera le code et téléchargera les dépendances nécessaires.
 
-10. **Exécuter l'application (depuis l'IDE) :**
+9.  **Exécuter l'application (depuis l'IDE) :**
+
     - Importez le projet `Pharma8` dans votre IDE (IntelliJ IDEA, Eclipse, VS Code) comme un projet Maven existant.
     - Exécutez la classe `com.sidoCop.sysPharma.launcher.Laucher` en tant qu'application Java.
     - Vous devriez voir les messages de console indiquant le chargement du contexte Spring, l'utilisation du pool de connexions HikariCP, et les interactions réelles avec la base de données via `JdbcTemplate`. Les logs de Log4j devraient également s'afficher.
+
+10. **Exécuter les tests unitaires :**
+    - **Depuis votre IDE :** Faites un clic droit sur la classe de test (`MedicamentTest.java` par exemple) ou sur le dossier `src/test/java` et sélectionnez "Run Tests".
+    - **Avec Maven (terminal) :**
+      ```bash
+      mvn test
+      ```
+      Les résultats des tests s'afficheront dans la console.
 
 ## Prochaines Étapes Possibles (Après Pharma8)
 
@@ -155,9 +131,12 @@ Ce dépôt contient la huitième itération du projet "Pharma". Cette version ma
 
 ---
 
+
+
 **Auteur :** Sidonie 
 - sidoniedjuissifohouo@gmail.com
 - www.linkedin.com/in/sidonie-djuissi-fohouo
 
 **Date :** 12 juin 2025
+
 
