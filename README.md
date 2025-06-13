@@ -131,12 +131,12 @@ Pour tester cette application, suivez ces étapes :
 
 ---
 
-**Auteur :**
 
-- Sidonie sidoniedjuissifohouo@gmail.com
-- [www.linkedin.com/in/sidonie-djuissi-fohouo](www.linkedin.com/in/sidonie-djuissi-fohouo)
 
-**Date :**
+**Auteur :** Sidonie 
+- sidoniedjuissifohouo@gmail.com
+- www.linkedin.com/in/sidonie-djuissi-fohouo
 
-- 12 juin 2025 (Initial commit)
-- **13 juin 2025 (Ajout de l'intégration JUnit 5)**
+**Date :** 12 juin 2025
+
+
