@@ -12,7 +12,7 @@ Ce dépôt contient la huitième itération du projet "Pharma". Cette version ma
   - Le fichier `datasource.properties` est toujours exclu du contrôle de version (`.gitignore`).
   - L'application continue d'utiliser HikariCP pour un pool de connexions performant et interagit avec une base de données MySQL réelle.
   - Log4j est toujours intégré pour la journalisation.
-  - **Tests unitaires : Introduction de JUnit 5 pour tester la logique des classes de modèle (comme `Medicament`) et potentiellement d'autres composants.**
+  - **Tests unitaires : Introduction de JUnit 5 pour tester la logique des classes de modèle (comme `Medicament`.)**
 
 ## Fonctionnalités (Démo 8)
 
@@ -59,7 +59,7 @@ Pour tester cette application, suivez ces étapes :
         prix DOUBLE NOT NULL,
         description TEXT,
         image VARCHAR(255),
-        designationCategorie VARCHAR(255)
+        categorie VARCHAR(255)
     );
     ```
 
@@ -81,11 +81,9 @@ Pour tester cette application, suivez ces étapes :
 6.  **Cloner le dépôt :**
 
     ```bash
-    git clone [https://github.com/votre_utilisateur/Pharma8.git](https://github.com/votre_utilisateur/Pharma8.git)
+    git clone https://github.com/sidonieGit/pharma-Demo8.git
     cd Pharma8
     ```
-
-    _(**Important :** Remplacez `votre_utilisateur` par votre nom d'utilisateur GitHub réel et `Pharma8.git` par le nom de votre dépôt si différent.)_
 
 7.  **Créer le fichier `datasource.properties` localement :**
 
@@ -99,7 +97,6 @@ Pour tester cette application, suivez ces étapes :
       hikari.maximumPoolSize=10
       hikari.minimumIdle=2
       ```
-    - **(Optionnel mais recommandé)** : Pour référence, vous pouvez créer un fichier `datasource.properties.example` dans le même dossier `src/main/resources` (qui lui, sera committé sur Git) avec des placeholders pour indiquer la structure attendue.
 
 8.  **Construire le projet et télécharger les dépendances (via Maven) :**
 
